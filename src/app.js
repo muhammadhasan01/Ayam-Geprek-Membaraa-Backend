@@ -76,3 +76,13 @@ app.get("/viewOrder", (request, response) => {
         response.send(result);
     });
 });
+
+app.post("/orderdone", (request, response) => {
+    console.log(request.body)
+    collection_ord.findOneAndUpdate({ "_id": new ObjectId(request.body._id) }, { $set: { done: true } }, (error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result.result);
+    });
+});
