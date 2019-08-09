@@ -48,16 +48,6 @@ app.post("/login", (request, response) => {
     });
 });
 
-
-app.get("/people", (request, response) => {
-    collection_acc.find({}).toArray((error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result);
-    });
-});
-
 app.post("/order", (request, response) => {
 	console.log(request.body)
     collection_ord.insertOne({...request.body, time: new Date(Date.now()).toISOString()}, (error, result) => {
