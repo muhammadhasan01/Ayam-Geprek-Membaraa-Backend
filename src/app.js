@@ -60,7 +60,7 @@ app.get("/people", (request, response) => {
 
 app.post("/order", (request, response) => {
 	console.log(request.body)
-    collection_ord.insertOne(request.body, (error, result) => {
+    collection_ord.insertOne({...request.body, time: new Date(Date.now()).toISOString()}, (error, result) => {
         if(error) {
             return response.status(500).send(error);
         }
@@ -69,7 +69,7 @@ app.post("/order", (request, response) => {
 });
 
 app.get("/viewOrder", (request, response) => {
-    collection_ord.find({}).toArray((error, result) => {
+    collection_ord.find({}).sort({time:1}).toArray((error, result) => {
         if(error) {
             return response.status(500).send(error);
         }
